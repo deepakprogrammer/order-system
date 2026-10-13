@@ -1,20 +1,32 @@
 package com.deepak.orderservice.controller;
 
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.deepak.orderservice.entity.Order;
+import com.deepak.orderservice.repository.OrderRepository;
 
 @RestController 
 public class OrderController {
     
+    private final OrderRepository orderRepository;
+
+    public OrderController(OrderRepository orderRepository){
+        this.orderRepository = orderRepository;
+    }
+
     @PostMapping("/orders")
-    public void create(){
-        
+    public Order create(@RequestBody Order order){
+        return orderRepository.save(order);
     }
 
     @GetMapping("/orders")
-    public void getAll(){
-        return;
+    public List<Order> getAll(){
+        return orderRepository.findAll();
     }
 }
